@@ -1,6 +1,5 @@
-# Nixvim template
-
-This template gives you a good starting point for configuring nixvim standalone.
+# Nixvim standalone flake
+Vuejs, Rust, Nix and Dotnet ready nixvim config
 
 ## Configuring
 

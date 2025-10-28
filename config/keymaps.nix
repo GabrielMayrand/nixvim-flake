@@ -231,9 +231,9 @@
         # LSP
         {
             key = "<leader>lr";
-            action = "<cmd>Lspsaga rename<CR>";
+            action = "<cmd>Telescope lsp_references<CR>";
             mode = "n";
-            options.desc = "LSP Rename";
+            options.desc = "LSP References";
         }
         {
             key = "<leader>lf";
@@ -255,9 +255,9 @@
         }
         {
             key = "gr";
-            action = "<cmd>Lspsaga rename<CR>";
+            action = "<cmd>Telescope lsp_references<CR>";
             mode = "n";
-            options.desc = "LSP Rename";
+            options.desc = "LSP References";
         }
         {
             key = "<leader>la";
@@ -278,32 +278,32 @@
             options.desc = "LSP Hover Info";
         }
         {
+            key = "<leader>r";
+            action = "<cmd>Lspsaga rename<CR>";
+            mode = "n";
+            options.desc = "LSP Rename";
+        }
+        {
             key = "<leader>ld";
-            action = "<cmd>Lspsaga goto_definition<CR>";
+            action = "<cmd>Telescope lsp_definitions<CR>";
             mode = "n";
             options.desc = "LSP Definition";
         }
         {
             key = "gd";
-            action = "<cmd>Lspsaga goto_definition<CR>";
+            action = "<cmd>Telescope lsp_definitions<CR>";
             mode = "n";
             options.desc = "LSP Definition";
         }
         {
             key = "<leader>lD";
-            action = "<cmd>Lspsaga goto_type_definition<CR>";
+            action = "<cmd>Telescope lsp_type_definitions<CR>";
             mode = "n";
             options.desc = "LSP Type Definition";
         }
         {
             key = "gD";
-            action = "<cmd>Lspsaga goto_type_definition<CR>";
-            mode = "n";
-            options.desc = "LSP Type Definition";
-        }
-        {
-            key = "<leader>lD";
-            action = "<cmd>Lspsaga goto_type_definition<CR>";
+            action = "<cmd>Telescope lsp_type_definitions<CR>";
             mode = "n";
             options.desc = "LSP Type Definition";
         }

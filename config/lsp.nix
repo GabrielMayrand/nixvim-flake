@@ -5,9 +5,9 @@
         keymaps.lspBuf = {
             "K" = "hover";
             "gr" = "references";
-            # "gd" = "definition";
+            "gd" = "definition";
             "gi" = "implementation";
-            # "gt" = "type_definition";
+            "gt" = "type_definition";
         };
     };
 

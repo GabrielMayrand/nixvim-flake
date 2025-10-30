@@ -1,5 +1,7 @@
 { pkgs, ... } :
 {
+    extraPackages = with pkgs; [ typescript-language-server ];
+
     extraConfigLua = ''
         local cwd = vim.fn.getcwd()
         local capabilities = require('blink.cmp').get_lsp_capabilities()

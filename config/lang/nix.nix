@@ -1,4 +1,6 @@
+{ pkgs, ... }:
 {
-    # NIX 
-    plugins.lsp.servers.nixd.enable = true;
+  extraPackages = with pkgs; [ nixfmt ];
+  # NIX
+  plugins.lsp.servers.nixd.enable = true;
 }

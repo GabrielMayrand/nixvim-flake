@@ -1,7 +1,7 @@
 {
-    # NEOTREE
-    plugins.neo-tree = {
-        enable = true;
-        autoLoad = true;
-    };
+  # NEOTREE
+  plugins.neo-tree = {
+    enable = true;
+    autoLoad = true;
+  };
 }

@@ -1,4 +1,4 @@
 {
-    # NAVIGATION
-    plugins.tmux-navigator.enable = true;
+  # NAVIGATION
+  plugins.tmux-navigator.enable = true;
 }

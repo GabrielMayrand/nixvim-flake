@@ -19,6 +19,7 @@
     ./opts.nix
     ./sleuth.nix
     ./telescope.nix
+    ./tiny.nix
     ./tmux.nix
     ./treesitter.nix
     ./lang

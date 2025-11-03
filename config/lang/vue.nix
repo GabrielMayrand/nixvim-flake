@@ -42,7 +42,16 @@
     vim.lsp.enable({"ts_ls"})
   '';
 
-  plugins.lsp.servers.eslint.enable = true;
+  plugins.lsp.servers.eslint = {
+    enable = true;
+    filetypes = [
+      "vue"
+      "ts"
+      "js"
+      "typescript"
+      "javascript"
+    ];
+  };
 
   plugins.dap.adapters.servers = {
     "pwa-node" = {

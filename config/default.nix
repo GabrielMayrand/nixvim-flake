@@ -23,5 +23,6 @@
     ./tmux.nix
     ./treesitter.nix
     ./lang
+    ./yanky.nix
   ];
 }

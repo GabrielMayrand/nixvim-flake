@@ -1,4 +1,8 @@
+{ pkgs, ... }:
 {
+  extraPackages = with pkgs; [
+    gcc
+  ];
   # RUST
   # LSP
   # plugins.lsp.servers.rust_analyzer.enable = true;

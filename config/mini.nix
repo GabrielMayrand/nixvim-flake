@@ -1,6 +1,7 @@
 {
   plugins.mini.enable = true;
   plugins.mini-pairs.enable = true;
+  plugins.mini-diff.enable = true;
   plugins.mini-comment = {
     enable = true;
     settings = {

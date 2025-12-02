@@ -101,6 +101,19 @@
       action = "<cmd>LazyGit<CR>";
       key = "<leader>gg";
     }
+    # Git diff
+    {
+      key = "<leader>gd";
+      action = "<cmd>lua MiniDiff.config.view.style = 'sign'; vim.cmd('edit')";
+      mode = "n";
+      options.desc = "Toggle git diff";
+    }
+    {
+      key = "<leader>gD";
+      action = "<cmd>lua MiniDiff.toggle_overlay()";
+      mode = "n";
+      options.desc = "Toggle git diff overlay";
+    }
     # NEOTEST
     {
       key = "<leader>tt";

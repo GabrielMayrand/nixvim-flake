@@ -104,13 +104,13 @@
     # Git diff
     {
       key = "<leader>gd";
-      action = "<cmd>lua MiniDiff.config.view.style = 'sign'; vim.cmd('edit')";
+      action = "<cmd>lua MiniDiff.config.view.style = 'sign'; vim.cmd('edit')<cr>";
       mode = "n";
       options.desc = "Toggle git diff";
     }
     {
       key = "<leader>gD";
-      action = "<cmd>lua MiniDiff.toggle_overlay()";
+      action = "<cmd>lua MiniDiff.toggle_overlay()<cr>";
       mode = "n";
       options.desc = "Toggle git diff overlay";
     }

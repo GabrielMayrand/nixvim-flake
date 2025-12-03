@@ -101,18 +101,31 @@
       action = "<cmd>LazyGit<CR>";
       key = "<leader>gg";
     }
-    # Git diff
+    # MINI DIFF
     {
-      key = "<leader>gd";
+      key = "<leader>gds";
       action = "<cmd>lua MiniDiff.config.view.style = 'sign'; vim.cmd('edit')<cr>";
       mode = "n";
       options.desc = "Toggle git diff";
     }
     {
-      key = "<leader>gD";
+      key = "<leader>gdo";
       action = "<cmd>lua MiniDiff.toggle_overlay()<cr>";
       mode = "n";
       options.desc = "Toggle git diff overlay";
+    }
+    # DIFFVIEW
+    {
+      key = "<leader>gdh";
+      action = "<cmd>DiffviewFileHistory %<cr>";
+      mode = "n";
+      options.desc = "Diff View Current File History";
+    }
+    {
+      key = "<leader>gD";
+      action = "<cmd>DiffViewClose<cr>";
+      mode = "n";
+      options.desc = "Diff View Close";
     }
     # NEOTEST
     {

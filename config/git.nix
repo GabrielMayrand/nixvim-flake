@@ -5,4 +5,5 @@
   #     enable = true;
   #     settings.enable = false;
   # };
+  plugins.diffview.enable = true;
 }

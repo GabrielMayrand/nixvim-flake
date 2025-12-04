@@ -248,7 +248,7 @@
       options.desc = "Disable wrap";
     }
     {
-      key = "<leader>gl";
+      key = "<leader>gB";
       action = "<cmd> GitBlameToggle <CR>";
       mode = "n";
     }

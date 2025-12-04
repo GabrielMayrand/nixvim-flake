@@ -1,10 +1,10 @@
 {
   # GIT
   plugins.lazygit.enable = true;
-  # plugins.gitblame = {
-  #     enable = true;
-  #     settings.enable = false;
-  # };
+  plugins.gitblame = {
+    enable = true;
+    settings.enable = false;
+  };
   plugins.diffview.enable = true;
   plugins.git-conflict.enable = true;
 }

@@ -109,7 +109,7 @@
       options.desc = "Toggle git diff";
     }
     {
-      key = "<leader>gdo";
+      key = "<leader>gdv";
       action = "<cmd>lua MiniDiff.toggle_overlay()<cr>";
       mode = "n";
       options.desc = "Toggle git diff overlay";
@@ -122,8 +122,14 @@
       options.desc = "Diff View Current File History";
     }
     {
-      key = "<leader>gD";
-      action = "<cmd>DiffViewClose<cr>";
+      key = "<leader>gdc";
+      action = "<cmd>DiffviewClose<cr>";
+      mode = "n";
+      options.desc = "Diff View Close";
+    }
+    {
+      key = "<leader>gdo";
+      action = "<cmd>DiffviewOpen<cr>";
       mode = "n";
       options.desc = "Diff View Close";
     }

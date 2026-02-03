@@ -4,22 +4,7 @@
 }:
 {
   plugins.lsp.servers.roslyn_ls.enable = true;
-  
-  # Enable easy-dotnet plugin for better .NET workflow
-  plugins.easy-dotnet = {
-    enable = true;
-    settings = {
-      # Auto bootstrap namespace when creating new files
-      auto_bootstrap_namespace = true;
-      
-      # Test runner configuration
-      test_runner = {
-        enable_buffer_test_execution = true;
-        viewmode = "float";
-      };
-    };
-  };
-  
+
   extraPackages = with pkgs; [
     netcoredbg
   ];
@@ -71,7 +56,7 @@
     dap.listeners.after.event_initialized["dapui_config"] = function()
       dapui.open()
     end
-    
+
     -- Log when breakpoints are set
     dap.listeners.after.event_breakpoint["log_breakpoint"] = function(session, body)
       if body.reason == "changed" and body.breakpoint then

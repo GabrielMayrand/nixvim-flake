@@ -234,6 +234,33 @@
         desc = "Debug at cursor";
       };
     }
+    {
+      mode = "n";
+      key = "<leader>dB";
+      action = "<cmd>lua require('dap').list_breakpoints()<cr>";
+      options = {
+        silent = true;
+        desc = "List Breakpoints";
+      };
+    }
+    {
+      mode = "n";
+      key = "<leader>dC";
+      action = "<cmd>lua require('dap').clear_breakpoints()<cr>";
+      options = {
+        silent = true;
+        desc = "Clear All Breakpoints";
+      };
+    }
+    {
+      mode = "n";
+      key = "<leader>dR";
+      action = "<cmd>lua require('dap').repl.toggle()<cr>";
+      options = {
+        silent = true;
+        desc = "Toggle REPL";
+      };
+    }
     # UI
     {
       key = "<leader>us";
@@ -302,6 +329,37 @@
       key = "<M-k>";
       action = "<cmd>wincmd + <CR>";
       mode = "n";
+    }
+    # EASY-DOTNET
+    {
+      key = "<leader>nr";
+      action = "<cmd>lua require('easy-dotnet').run_project()<cr>";
+      mode = "n";
+      options.desc = ".NET Run Project";
+    }
+    {
+      key = "<leader>nt";
+      action = "<cmd>lua require('easy-dotnet').test_project()<cr>";
+      mode = "n";
+      options.desc = ".NET Test Project";
+    }
+    {
+      key = "<leader>nb";
+      action = "<cmd>lua require('easy-dotnet').build_project()<cr>";
+      mode = "n";
+      options.desc = ".NET Build Project";
+    }
+    {
+      key = "<leader>ns";
+      action = "<cmd>lua require('easy-dotnet').restore()<cr>";
+      mode = "n";
+      options.desc = ".NET Restore";
+    }
+    {
+      key = "<leader>np";
+      action = "<cmd>lua require('easy-dotnet').pick_project()<cr>";
+      mode = "n";
+      options.desc = ".NET Pick Project";
     }
     # LSP
     {

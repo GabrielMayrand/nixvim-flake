@@ -7,6 +7,7 @@
 
   extraPackages = with pkgs; [
     netcoredbg
+    roslyn-ls
   ];
 
   extraConfigLua = ''

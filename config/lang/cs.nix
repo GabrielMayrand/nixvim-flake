@@ -3,5 +3,5 @@
   ...
 }:
 {
-  plugins.lsp.servers.csharp-ls.enable = true;
+  plugins.lsp.servers.roslyn_ls.enable = true;
 }

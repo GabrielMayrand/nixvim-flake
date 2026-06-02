@@ -5,7 +5,7 @@
   ];
   # RUST
   # LSP
-  # plugins.lsp.servers.rust_analyzer.enable = true;
+  plugins.lsp.servers.rust_analyzer.enable = true;
   # PLUGINS
   plugins.crates.enable = true;
   # DAP /LSP

@@ -4,6 +4,7 @@
     gcc
     cargo
     rustc
+    rustlings
   ];
   # RUST
   # LSP

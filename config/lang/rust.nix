@@ -2,6 +2,8 @@
 {
   extraPackages = with pkgs; [
     gcc
+    cargo
+    rustc
   ];
   # RUST
   # LSP

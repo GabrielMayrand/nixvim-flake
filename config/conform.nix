@@ -70,6 +70,11 @@
         end
       '';
       formatters_by_ft = {
+        rust = {
+          __unkeyed-1 = "rustfmt";
+          timeout_ms = 2000;
+          stop_after_first = true;
+        };
         nix = {
           __unkeyed-1 = "nixfmt";
           timeout_ms = 2000;

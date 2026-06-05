@@ -5,6 +5,7 @@
     cargo
     rustc
     rustlings
+    rustfmt
   ];
   # RUST
   # LSP

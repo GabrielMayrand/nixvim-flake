@@ -6,6 +6,7 @@
     rustc
     rustlings
     rustfmt
+    cargo-nextest
   ];
   # RUST
   # LSP

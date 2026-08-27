@@ -6,5 +6,5 @@
     settings.enable = false;
   };
   plugins.diffview.enable = true;
-  plugins.git-conflict.enable = true;
+  # plugins.git-conflict.enable = true;
 }

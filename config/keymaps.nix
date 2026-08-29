@@ -333,19 +333,19 @@
     # EASY-DOTNET
     {
       key = "<leader>nr";
-      action = "<cmd>lua require('easy-dotnet').run_project()<cr>";
+      action = "<cmd>lua require('easy-dotnet').run()<cr>";
       mode = "n";
       options.desc = ".NET Run Project";
     }
     {
       key = "<leader>nt";
-      action = "<cmd>lua require('easy-dotnet').test_project()<cr>";
+      action = "<cmd>lua require('easy-dotnet').test()<cr>";
       mode = "n";
       options.desc = ".NET Test Project";
     }
     {
       key = "<leader>nb";
-      action = "<cmd>lua require('easy-dotnet').build_project()<cr>";
+      action = "<cmd>lua require('easy-dotnet').build()<cr>";
       mode = "n";
       options.desc = ".NET Build Project";
     }
@@ -357,9 +357,9 @@
     }
     {
       key = "<leader>np";
-      action = "<cmd>lua require('easy-dotnet').pick_project()<cr>";
+      action = "<cmd>lua require('easy-dotnet').testrunner()<cr>";
       mode = "n";
-      options.desc = ".NET Pick Project";
+      options.desc = ".NET Test Runner";
     }
     # LSP
     {

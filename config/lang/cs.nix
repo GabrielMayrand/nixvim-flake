@@ -51,6 +51,8 @@ in
   plugins.neotest.adapters.dotnet.enable = false;
 
   extraConfigLuaPre = ''
+    local _data_dir = vim.fn.stdpath("data") .. "/easy-dotnet"
+    pcall(vim.fn.mkdir, _data_dir, "p")
     local _dotnet_bin = vim.fn.exepath("dotnet")
     if _dotnet_bin ~= "" then
       local _real = vim.uv.fs_realpath(_dotnet_bin) or _dotnet_bin

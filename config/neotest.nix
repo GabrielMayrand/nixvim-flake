@@ -36,10 +36,11 @@
               if ignored[name] then return false end
 
               -- Allow frontend test container directory
-              if name == "Onyx.Web" then return true end
+              if name == "Onyx.Web" or (rel_path or "") == "Onyx.Web" then return true end
+              local rel = rel_path or ""
+              if rel:find("^Onyx%.Web/Scripts") or rel:find("^Onyx%.Web/Tests") then return true end
 
               -- If already within a test directory, explore all child directories
-              local rel = rel_path or ""
               if rel:lower():find("test") then return true end
 
               -- Top-level directories must contain 'test'

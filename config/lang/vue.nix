@@ -1,56 +1,46 @@
 { pkgs, ... }:
 {
   extraPackages = with pkgs; [
-    typescript-language-server
     prettierd
     prettier
   ];
 
-  extraConfigLua = ''
-    local cwd = vim.fn.getcwd()
-    local capabilities = require('blink.cmp').get_lsp_capabilities()
-    vim.lsp.config("ts_ls", {
-        capabilities = capabilities,
-        init_options = {
-          plugins = {
-            {
-              name = "@vue/typescript-plugin",
-              location = cwd .. "/node_modules/@vue/language-server",
-              languages = { "vue" }
-            }
-          }
-        },
-        settings = {
-          typescript = {
-            tsserver = {
-              useSyntaxServer = false
-            },
-            inlayHints = {
-              includeInlayParameterNameHints = 'all',
-              includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-              includeInlayFunctionParameterTypeHints = true,
-              includeInlayVariableTypeHints = true,
-              includeInlayVariableTypeHintsWhenTypeMatchesName = true,
-              includeInlayPropertyDeclarationTypeHints = true,
-              includeInlayFunctionLikeReturnTypeHints = true,
-              includeInlayEnumMemberValueHints = true
-            }
-          }
-        },
-        filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" }
-    })
-    vim.lsp.enable({"ts_ls"})
-  '';
+  plugins.lsp.servers = {
+    ts_ls = {
+      enable = true;
+      settings = {
+        typescript = {
+          tsserver = {
+            useSyntaxServer = false;
+          };
+          inlayHints = {
+            includeInlayParameterNameHints = "all";
+            includeInlayParameterNameHintsWhenArgumentMatchesName = true;
+            includeInlayFunctionParameterTypeHints = true;
+            includeInlayVariableTypeHints = true;
+            includeInlayVariableTypeHintsWhenTypeMatchesName = true;
+            includeInlayPropertyDeclarationTypeHints = true;
+            includeInlayFunctionLikeReturnTypeHints = true;
+            includeInlayEnumMemberValueHints = true;
+          };
+        };
+      };
+    };
 
-  plugins.lsp.servers.eslint = {
-    enable = true;
-    filetypes = [
-      "vue"
-      "ts"
-      "js"
-      "typescript"
-      "javascript"
-    ];
+    volar = {
+      enable = true;
+    };
+
+    eslint = {
+      enable = true;
+      filetypes = [
+        "vue"
+        "ts"
+        "js"
+        "typescript"
+        "javascript"
+      ];
+    };
   };
 
   plugins.dap.adapters.servers = {
@@ -74,9 +64,6 @@
 
   plugins.neotest.adapters = {
     jest.enable = true;
-  };
-
-  plugins.neotest.adapters = {
     plenary.enable = true;
   };
 }

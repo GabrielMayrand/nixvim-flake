@@ -131,7 +131,53 @@
       key = "<leader>gdo";
       action = "<cmd>DiffviewOpen<cr>";
       mode = "n";
-      options.desc = "Diff View Close";
+      options.desc = "Diff View Open";
+    }
+    {
+      key = "<leader>gdm";
+      action.__raw = ''
+        function()
+          local current_branch = vim.trim(vim.fn.system("git rev-parse --abbrev-ref HEAD"))
+          if vim.v.shell_error ~= 0 or current_branch == "" then
+            vim.notify("Diffview: Not in a git repository or unable to determine branch", vim.log.levels.ERROR)
+            return
+          end
+
+          local default_branch = nil
+          local origin_head = vim.trim(vim.fn.system("git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null"))
+          if vim.v.shell_error == 0 and origin_head ~= "" then
+            local base_name = origin_head:gsub("^[^/]+/", "")
+            vim.fn.system("git rev-parse --verify --quiet refs/heads/" .. base_name)
+            if vim.v.shell_error == 0 then
+              default_branch = base_name
+            else
+              default_branch = origin_head
+            end
+          else
+            for _, name in ipairs({ "main", "master", "trunk", "development", "dev" }) do
+              vim.fn.system("git rev-parse --verify --quiet refs/heads/" .. name)
+              if vim.v.shell_error == 0 then
+                default_branch = name
+                break
+              end
+            end
+            if not default_branch then
+              for _, name in ipairs({ "origin/main", "origin/master" }) do
+                vim.fn.system("git rev-parse --verify --quiet refs/remotes/" .. name)
+                if vim.v.shell_error == 0 then
+                  default_branch = name
+                  break
+                end
+              end
+            end
+          end
+
+          default_branch = default_branch or "main"
+          vim.cmd(string.format("DiffviewOpen %s..%s --imply-local", default_branch, current_branch))
+        end
+      '';
+      mode = "n";
+      options.desc = "Diff View against default branch";
     }
     # NEOTEST
     {

@@ -534,6 +534,16 @@
       mode = "n";
       options.desc = "LSP Cursor Diagnostics";
     }
+    #OPENCODE
+    {
+      key = "<leader>oa";
+      action = "<cmd>lua require('opencode').ask('@this: ')<cr>";
+      mode = [
+        "n"
+        "x"
+      ];
+      options.desc = "Ask Opencode";
+    }
   ];
 
 }

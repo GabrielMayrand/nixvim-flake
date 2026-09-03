@@ -16,6 +16,7 @@
     ./mini.nix
     ./neotree.nix
     ./neotest.nix
+    ./opencode.nix
     ./opts.nix
     ./sleuth.nix
     ./telescope.nix

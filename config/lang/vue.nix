@@ -48,6 +48,33 @@
       local dap = require("dap")
       local js_debug_cmd = "${pkgs.vscode-js-debug}/bin/js-debug"
 
+      local function get_web_root()
+        local cwd = vim.fn.getcwd()
+        if vim.fn.isdirectory(cwd .. "/Onyx.Web") == 1 then
+          return cwd .. "/Onyx.Web"
+        end
+        return cwd
+      end
+
+      local function enrich_vue_config(config, on_config)
+        local enriched = vim.deepcopy(config)
+        local web_root = get_web_root()
+        local file = vim.fn.expand("%:p")
+        local prefix = web_root .. "/"
+
+        if vim.startswith(file, prefix) and file:sub(-4) == ".vue" then
+          local relative = file:sub(#prefix + 1)
+          local directory = vim.fn.fnamemodify(relative, ":h")
+          local name = vim.fn.fnamemodify(relative, ":t")
+          local generated = (directory == "." and "" or directory .. "/") .. "generated-" .. name
+          enriched.sourceMapPathOverrides = vim.deepcopy(enriched.sourceMapPathOverrides or {})
+          enriched.sourceMapPathOverrides["webpack-generated:///./" .. generated .. "?*"] =
+            "''${webRoot}/" .. relative
+        end
+
+        on_config(enriched)
+      end
+
       for _, adapter in ipairs({ "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal" }) do
         dap.adapters[adapter] = {
           type = "server",
@@ -60,6 +87,7 @@
           options = {
             initialize_timeout_sec = 30,
           },
+          enrich_config = enrich_vue_config,
         }
       end
 
@@ -80,14 +108,6 @@
         return nil
       end
 
-      local function get_web_root()
-        local cwd = vim.fn.getcwd()
-        if vim.fn.isdirectory(cwd .. "/Onyx.Web") == 1 then
-          return cwd .. "/Onyx.Web"
-        end
-        return cwd
-      end
-
       local chrome_exe = find_chrome_executable()
 
       local js_debug_configs = {
@@ -95,11 +115,13 @@
           type = "pwa-chrome",
           request = "attach",
           name = "Attach to Chrome (port 9222)",
+          address = "127.0.0.1",
           port = 9222,
           timeout = 30000,
           webRoot = get_web_root,
           sourceMaps = true,
           sourceMapPathOverrides = {
+            ["vite:///*"] = "''${webRoot}/*",
             ["webpack-vue:///*"] = "''${webRoot}/*",
             ["webpack-vue:///./*"] = "''${webRoot}/*",
             ["webpack:///*"] = "''${webRoot}/*",
@@ -112,6 +134,7 @@
           type = "pwa-chrome",
           request = "attach",
           name = "Attach to Chrome (Custom Port)",
+          address = "127.0.0.1",
           port = function()
             local p = vim.fn.input("Chrome Remote Debug Port: ", "9222")
             return tonumber(p) or 9222
@@ -120,6 +143,7 @@
           webRoot = get_web_root,
           sourceMaps = true,
           sourceMapPathOverrides = {
+            ["vite:///*"] = "''${webRoot}/*",
             ["webpack-vue:///*"] = "''${webRoot}/*",
             ["webpack-vue:///./*"] = "''${webRoot}/*",
             ["webpack:///*"] = "''${webRoot}/*",
@@ -139,6 +163,7 @@
           webRoot = get_web_root,
           sourceMaps = true,
           sourceMapPathOverrides = {
+            ["vite:///*"] = "''${webRoot}/*",
             ["webpack-vue:///*"] = "''${webRoot}/*",
             ["webpack-vue:///./*"] = "''${webRoot}/*",
             ["webpack:///*"] = "''${webRoot}/*",
@@ -159,6 +184,7 @@
           webRoot = get_web_root,
           sourceMaps = true,
           sourceMapPathOverrides = {
+            ["vite:///*"] = "''${webRoot}/*",
             ["webpack-vue:///*"] = "''${webRoot}/*",
             ["webpack-vue:///./*"] = "''${webRoot}/*",
             ["webpack:///*"] = "''${webRoot}/*",
@@ -180,6 +206,7 @@
           webRoot = get_web_root,
           sourceMaps = true,
           sourceMapPathOverrides = {
+            ["vite:///*"] = "''${webRoot}/*",
             ["webpack-vue:///*"] = "''${webRoot}/*",
             ["webpack-vue:///./*"] = "''${webRoot}/*",
             ["webpack:///*"] = "''${webRoot}/*",

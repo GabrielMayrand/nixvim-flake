@@ -110,91 +110,57 @@
 
       local chrome_exe = find_chrome_executable()
 
+      local chrome_defaults = {
+        type = "pwa-chrome",
+        address = "127.0.0.1",
+        timeout = 30000,
+        webRoot = get_web_root,
+        sourceMaps = true,
+        sourceMapPathOverrides = {
+          ["vite:///*"] = "''${webRoot}/*",
+          ["webpack-vue:///*"] = "''${webRoot}/*",
+          ["webpack-vue:///./*"] = "''${webRoot}/*",
+          ["webpack:///*"] = "''${webRoot}/*",
+          ["webpack:///./*"] = "''${webRoot}/*",
+          ["webpack:///Scripts/*"] = "''${webRoot}/Scripts/*",
+        },
+        skipFiles = { "<node_modules>/**" },
+      }
+
+      local function chrome_config(fields)
+        return vim.tbl_extend("force", vim.deepcopy(chrome_defaults), fields)
+      end
+
       local js_debug_configs = {
-        {
-          type = "pwa-chrome",
+        chrome_config({
           request = "attach",
           name = "Attach to Chrome (port 9222)",
-          address = "127.0.0.1",
           port = 9222,
-          timeout = 30000,
-          webRoot = get_web_root,
-          sourceMaps = true,
-          sourceMapPathOverrides = {
-            ["vite:///*"] = "''${webRoot}/*",
-            ["webpack-vue:///*"] = "''${webRoot}/*",
-            ["webpack-vue:///./*"] = "''${webRoot}/*",
-            ["webpack:///*"] = "''${webRoot}/*",
-            ["webpack:///./*"] = "''${webRoot}/*",
-            ["webpack:///Scripts/*"] = "''${webRoot}/Scripts/*",
-          },
-          skipFiles = { "<node_modules>/**" },
-        },
-        {
-          type = "pwa-chrome",
+        }),
+        chrome_config({
           request = "attach",
           name = "Attach to Chrome (Custom Port)",
-          address = "127.0.0.1",
           port = function()
             local p = vim.fn.input("Chrome Remote Debug Port: ", "9222")
             return tonumber(p) or 9222
           end,
-          timeout = 30000,
-          webRoot = get_web_root,
-          sourceMaps = true,
-          sourceMapPathOverrides = {
-            ["vite:///*"] = "''${webRoot}/*",
-            ["webpack-vue:///*"] = "''${webRoot}/*",
-            ["webpack-vue:///./*"] = "''${webRoot}/*",
-            ["webpack:///*"] = "''${webRoot}/*",
-            ["webpack:///./*"] = "''${webRoot}/*",
-            ["webpack:///Scripts/*"] = "''${webRoot}/Scripts/*",
-          },
-          skipFiles = { "<node_modules>/**" },
-        },
-        {
-          type = "pwa-chrome",
+        }),
+        chrome_config({
           request = "launch",
           name = "Launch Chrome (Onyx.Web https://localhost:44355)",
           url = "https://localhost:44355",
           runtimeExecutable = chrome_exe,
           userDataDir = true,
-          timeout = 30000,
-          webRoot = get_web_root,
-          sourceMaps = true,
-          sourceMapPathOverrides = {
-            ["vite:///*"] = "''${webRoot}/*",
-            ["webpack-vue:///*"] = "''${webRoot}/*",
-            ["webpack-vue:///./*"] = "''${webRoot}/*",
-            ["webpack:///*"] = "''${webRoot}/*",
-            ["webpack:///./*"] = "''${webRoot}/*",
-            ["webpack:///Scripts/*"] = "''${webRoot}/Scripts/*",
-          },
           runtimeArgs = { "--ignore-certificate-errors" },
-          skipFiles = { "<node_modules>/**" },
-        },
-        {
-          type = "pwa-chrome",
+        }),
+        chrome_config({
           request = "launch",
           name = "Launch Chrome (Webpack Dev Server http://localhost:8086)",
           url = "http://localhost:8086",
           runtimeExecutable = chrome_exe,
           userDataDir = true,
-          timeout = 30000,
-          webRoot = get_web_root,
-          sourceMaps = true,
-          sourceMapPathOverrides = {
-            ["vite:///*"] = "''${webRoot}/*",
-            ["webpack-vue:///*"] = "''${webRoot}/*",
-            ["webpack-vue:///./*"] = "''${webRoot}/*",
-            ["webpack:///*"] = "''${webRoot}/*",
-            ["webpack:///./*"] = "''${webRoot}/*",
-            ["webpack:///Scripts/*"] = "''${webRoot}/Scripts/*",
-          },
-          skipFiles = { "<node_modules>/**" },
-        },
-        {
-          type = "pwa-chrome",
+        }),
+        chrome_config({
           request = "launch",
           name = "Launch Chrome (Custom URL)",
           url = function()
@@ -202,20 +168,8 @@
           end,
           runtimeExecutable = chrome_exe,
           userDataDir = true,
-          timeout = 30000,
-          webRoot = get_web_root,
-          sourceMaps = true,
-          sourceMapPathOverrides = {
-            ["vite:///*"] = "''${webRoot}/*",
-            ["webpack-vue:///*"] = "''${webRoot}/*",
-            ["webpack-vue:///./*"] = "''${webRoot}/*",
-            ["webpack:///*"] = "''${webRoot}/*",
-            ["webpack:///./*"] = "''${webRoot}/*",
-            ["webpack:///Scripts/*"] = "''${webRoot}/Scripts/*",
-          },
           runtimeArgs = { "--ignore-certificate-errors" },
-          skipFiles = { "<node_modules>/**" },
-        },
+        }),
         {
           type = "pwa-node",
           request = "launch",

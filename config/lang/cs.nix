@@ -1,5 +1,6 @@
 { pkgs, ... }:
 let
+  dotnet-sdk = pkgs.dotnetCorePackages.sdk_10_0-bin;
   easy-dotnet-nvim-latest = pkgs.vimUtils.buildVimPlugin {
     name = "easy-dotnet-nvim";
     src = pkgs.fetchFromGitHub {
@@ -53,11 +54,9 @@ in
   extraConfigLuaPre = ''
     local _data_dir = vim.fn.stdpath("data") .. "/easy-dotnet"
     pcall(vim.fn.mkdir, _data_dir, "p")
-    local _dotnet_bin = vim.fn.exepath("dotnet")
-    if _dotnet_bin ~= "" then
-      local _real = vim.uv.fs_realpath(_dotnet_bin) or _dotnet_bin
-      vim.env.DOTNET_ROOT = vim.fn.fnamemodify(_real, ":h")
-    end
+    -- Nix's dotnet executable is a wrapper; its parent is not the runtime root.
+    vim.env.DOTNET_ROOT = "${dotnet-sdk}/share/dotnet"
+    vim.env.DOTNET_ROOT_X64 = vim.env.DOTNET_ROOT
   '';
 
   extraConfigLua = ''
@@ -91,6 +90,16 @@ in
     vim.api.nvim_create_autocmd("VimEnter", {
       once = true,
       callback = function()
+        local solution = require("easy-dotnet.current_solution")
+        if not solution.try_get_selected_solution() then
+          local candidates = vim.fs.find("Onyx.sln", {
+            path = vim.fn.getcwd(),
+            upward = true,
+            type = "file",
+          })
+          if #candidates == 1 then pcall(solution.set_solution, candidates[1]) end
+        end
+
         vim.defer_fn(function()
           local ok, nio = pcall(require, "nio")
           if not ok then return end
@@ -102,5 +111,60 @@ in
         end, 3000)
       end,
     })
+
+    local function _visual_selection()
+      local s = vim.fn.getpos("'<")
+      local e = vim.fn.getpos("'>")
+      if s[2] == 0 or e[2] == 0 then return nil end
+
+      local lines = vim.fn.getline(s[2], e[2])
+      if type(lines) ~= "table" or #lines == 0 then return nil end
+
+      if #lines == 1 then
+        return string.sub(lines[1], s[3], e[3])
+      end
+      lines[1] = string.sub(lines[1], s[3])
+      lines[#lines] = string.sub(lines[#lines], 1, e[3])
+      return table.concat(lines, "\n")
+    end
+
+    local function _onyx_solution_dir()
+      local found = vim.fs.find("Onyx.sln", {
+        path = vim.fn.getcwd(),
+        upward = true,
+        type = "file",
+      })
+      if #found > 0 then return vim.fs.dirname(found[1]) end
+      return vim.fn.getcwd()
+    end
+
+    function _G.dotnet_test_filter(visual)
+      local selection
+      if visual then
+        selection = _visual_selection()
+      else
+        selection = vim.fn.expand("<cword>")
+      end
+      selection = vim.trim(selection or "")
+      if selection == "" then
+        vim.notify("dotnet test: nothing selected", vim.log.levels.WARN)
+        return
+      end
+
+      local filter = "FullyQualifiedName~" .. selection
+      local cmd = string.format(
+        "cd %s && dotnet test Onyx.sln --filter %s",
+        vim.fn.shellescape(_onyx_solution_dir()),
+        vim.fn.shellescape(filter)
+      )
+
+      vim.cmd("botright split")
+      vim.cmd("terminal " .. cmd)
+      vim.cmd("startinsert")
+    end
+
+    vim.api.nvim_create_user_command("DotnetTestFilter", function()
+      _G.dotnet_test_filter(false)
+    end, { desc = "Run dotnet test filtered by the word under the cursor" })
   '';
 }

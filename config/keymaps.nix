@@ -407,6 +407,18 @@
       mode = "n";
       options.desc = ".NET Test Runner";
     }
+    {
+      key = "<leader>nf";
+      action = "<cmd>lua _G.dotnet_test_filter(false)<cr>";
+      mode = "n";
+      options.desc = ".NET Test Filter (word under cursor)";
+    }
+    {
+      key = "<leader>nf";
+      action = "<cmd>lua _G.dotnet_test_filter(true)<cr>";
+      mode = "x";
+      options.desc = ".NET Test Filter (visual selection)";
+    }
     # LSP
     {
       key = "<leader>lr";

@@ -25,5 +25,6 @@
     ./treesitter.nix
     ./lang
     ./yanky.nix
+    ./md.nix
   ];
 }
